@@ -71,6 +71,7 @@ export default {
     })
     this.getMenu();
     this.$store.dispatch('actionsGetTime',{name:'zhangsan',age:13})
+    console.log('commitChange')
   },
   methods:{
     getMenu(){
