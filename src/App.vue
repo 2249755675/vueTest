@@ -1,14 +1,33 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <keep-alive>
+      <router-view v-if='$route.meta.keepAlive'></router-view>
+    </keep-alive>
+    <router-view v-if='!$route.meta.keepAlive'></router-view>
   </div>
 </template>
 
-<style lang="scss">
+<script>
+
+export default {
+  data(){
+    return{
+      clientHeight:'500px',
+    }
+  },
+  computed:{
+
+  },
+  mounted() {
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+body{
+	// margin:0;
+	// padding:0;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -18,7 +37,7 @@
 }
 
 #nav {
-  padding: 30px;
+  // padding: 30px;
 
   a {
     font-weight: bold;
@@ -30,3 +49,4 @@
   }
 }
 </style>
+
