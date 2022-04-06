@@ -21,7 +21,28 @@
         </el-form-item>
       </el-form-item>
       <el-form-item>
+        <el-select v-model="ruleForm.value1" @change="selectChange" placeholder="请选择">
+          <el-option
+              v-for="item in options1"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-select v-model="ruleForm.value2" placeholder="请选择">
+          <el-option
+              v-for="item in options2"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item>
         <el-button @click="searchClick">搜索</el-button>
+        <el-button @click="itemClick">单元格点击</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -66,6 +87,8 @@ export default {
         maxSale:'',
         minPrice:'',
         maxPrice:'',
+        value1:'',
+        value2:'',
       },
       rules: {
         name: [
@@ -84,8 +107,34 @@ export default {
         minPrice:[
           {validator:minPriceValidate,trigger:'change'},
         ]
-      }
+      },
+      options1:[
+        {label:'选项一',value:1},
+        {label:'选项二',value:2},
+        {label:'选项三',value:3},
+      ],
+      options2:[
+        {label:'选项四',value:4},
+        {label:'选项五',value:5},
+        {label:'选项六',value:6},
+      ]
     };
+  },
+  watch:{
+    'ruleForm.value1':{
+      handler(n,o){
+        console.log(n,'iiiiii')
+      },
+      immediate:false,
+      deep:true
+    },
+    'ruleForm.value2':{
+      handler(n,o){
+        console.log(n,'jjjjjjjj')
+      },
+      immediate:false,
+      deep:true
+    }
   },
   methods: {
     searchClick() {
@@ -97,6 +146,14 @@ export default {
     },
     resetForm() {
       this.$refs['ruleForm'].resetFields();
+    },
+    itemClick(){
+      this.ruleForm.value1 = 2;
+      this.ruleForm.value2 = 4;
+    },
+    selectChange(val){
+      console.log(val,'---')
+      this.ruleForm.value2 = '';
     }
   }
 }
