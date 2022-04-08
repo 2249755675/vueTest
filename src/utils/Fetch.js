@@ -1,15 +1,8 @@
 import axios from 'axios';
 import Qs from 'qs';
 import {
-  __mainFrameRootPath,
-  __appletPathConfig
-} from './environment';
-import {
   Message
 } from 'element-ui';
-import {
-  GetQueryString
-} from '../utils/utils'
 // 创建axios实例
 const service = axios.create({
   baseURL: process.env.BASE_API, // api的base_url
@@ -21,23 +14,14 @@ const service = axios.create({
   },
   timeout: 50000,
 });
-
+window._axiosPromiseArr = [] //取消接口配置使用
 // request拦截器
 service.interceptors.request.use((config) => {
-  let sUrl = window.location.href.substring(window.location.href.indexOf("?"), window.location.href.length);
-  if(GetQueryString(sUrl,'access_token')){
-    localStorage.setItem("access_token",GetQueryString(sUrl,'access_token'))
-  }
-  // 需要在请求发出前做的全局处理逻辑可以添加在这里
-  if(localStorage.getItem('access_token')){
-    config.headers['Authorization'] = `bearer ${localStorage.getItem('access_token')}`
-  }
-
-  if (config.url.indexOf("/agent") == -1 && config.url.indexOf("/recommend") == -1  ) {
-    config.url = __mainFrameRootPath +'/' + __appletPathConfig + 'backapi' + config.url;
-  } else {
-    config.url = __mainFrameRootPath + config.url;
-  }
+  //请求接口取消配置
+  config.cancelToken = new axios.CancelToken((cancel)=>{
+    window._axiosPromiseArr.push({cancel,url:config.url})//url字段为后面区分取消接口用
+    console.log(window._axiosPromiseArr,'----0000')
+  })
   return config;
 }, (error) => {
   // 可以在这里统一处理请求错误

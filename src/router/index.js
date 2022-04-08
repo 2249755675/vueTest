@@ -273,6 +273,12 @@ Vue.use(VueRouter)
         component:function (){
           return import('../views/formValidate')
         }
+      },
+      {
+        path:'axios',
+        component:function(){
+          return import('../views/axios')
+        }
       }
     ]
   },
@@ -284,6 +290,13 @@ Vue.use(VueRouter)
     // which is lazy-loaded when the route is visited.
     component: function () {
       return import(/* webpackChunkName: "about" */ '../views/About.vue')
+    }
+  },
+  {
+    path:'/login',
+    name:'login',
+    component:function(){
+      return import('../views/login')
     }
   },
   {
@@ -491,6 +504,28 @@ Vue.use(VueRouter)
 const router = new VueRouter({
   mode:'hash',
   routes
+})
+
+router.beforeEach((to, from, next)=>{
+  console.log(to,from,'路由守卫====》》》')
+  let login = localStorage.getItem('loginToken');
+  if(to.path == '/login'){//去登录页
+    if(login){//登录过
+      next({
+        path:'/homeManage'
+      })
+    }else{
+      next();
+    }
+  }else{//不去登录页
+    if(login){
+      next()
+    }else{
+      next({
+        path:'/login'
+      })
+    }
+  }
 })
 
 export default router

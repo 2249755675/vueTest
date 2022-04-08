@@ -5,7 +5,16 @@
 <!--        <img src="../assets/my.jpg" :style="{width:imgWidth+'px'}" alt="">-->
         <div class="top-left">小区</div>
       </div>
-      <div class="top-right">登录</div>
+      <div class="top-right">
+        <el-dropdown trigger="click" @command="changeSelect">
+          <span class="el-dropdown-link">
+            退出<i class="el-icon-arrow-down el-icon--right"></i>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="exit">退出登录</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </div>
     </div>
   </div>
 </template>
@@ -26,6 +35,17 @@ export default {
   },
   mounted() {
 
+  },
+  methods:{
+    changeSelect(val){
+      console.log(val,'--')
+      if(val == 'exit'){//退出
+        localStorage.clear();
+        this.$router.push({
+          path:'/login'
+        })
+      }
+    }
   }
 }
 </script>
@@ -52,6 +72,9 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
+    }
+    .top-right{
+      cursor: pointer;
     }
   }
 }

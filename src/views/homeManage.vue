@@ -123,6 +123,7 @@ export default {
           // {"id":37,"sortedId":37,"menuName":"iframe链接","childList":[],"linkUrl":"","resourceType":1,path:'https://test.91hiwork.com/analysisacceptance/index#/propertyPerformance',isLink:true},
           {"id":38,"sortedId":38,"menuName":"0-1000000","childList":[],"linkUrl":"","resourceType":1,path:'/homeManage/regexp'},
           {"id":39,"sortedId":39,"menuName":"表单校验","childList":[],"linkUrl":"","resourceType":1,path:'/homeManage/formValidate'},
+          {"id":40,"sortedId":40,"menuName":"axios","childList":[],"linkUrl":"","resourceType":1,path:'/homeManage/axios'},
         ]
       }
       if(res.code == 200){
